@@ -3,4 +3,5 @@ export enum Category {
     jewelry = "jewelry",
     electronics = "electronics",
     womens_clothing = "women's clothing",
+    blank = "",                             // bad idea I know but idc
 }
