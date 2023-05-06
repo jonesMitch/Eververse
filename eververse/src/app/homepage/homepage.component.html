@@ -1,11 +1,36 @@
-<button type="button" (click)="onClick()">
-    POST New Product
+<button type="button" (click)="addAccount()">
+    POST New Account
 </button>
 
-<button type="button" (click)="getClick2()">
-    GET Product
+<button type="button" (click)="getAccounts()">
+    GET Accounts
 </button>
 
-<h2>Enter Data:</h2>
+<button type="button" (click)="getAccount('mitch.jones@ndsu.edu')">
+    GET account | email=mitch.jones@ndsu.edu
+</button>
 
-<
+<button type="button" (click)="getAccount('ebray@bray.tech')">
+    Get account | email=ebray@bray.tech
+</button>
+
+<button type="button" (click)="updateAccount()">
+    UPDATE account
+</button>
+
+<!-- <button type="button" (click)="deleteAccount('ebray@bray.tech')">
+    DELETE account | email=ebray@bray.tech
+</button> -->
+
+<div *ngIf="test != undefined">
+    <p>Email: {{test.email}}</p>
+    <p>Password: {{test.password}}</p>
+    <p>fName: {{test.fName}}</p>
+    <p>lName: {{test.lName}}</p>
+</div>
+<div *ngIf="test === undefined">
+    <p>Email:</p>
+    <p>Password:</p>
+    <p>fName:</p>
+    <p>lName:</p>
+</div>

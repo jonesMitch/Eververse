@@ -1,12 +1,9 @@
-import { Injectable, OnInit } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-// import { Product } from './Product';
-// import { Product } from './product2';
-import { Product } from './product3';
-import { Category } from './Category';
+import { Product } from './product';
 import { db } from './settings';
-import { Observable, map } from 'rxjs';
+import { Observable, catchError, map, concatMap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -18,8 +15,10 @@ export class ProductdbService {
   ) { }
 
   addProduct(newProduct: Product) {
-    console.log("POSTed");
-    return this.http.post(db.url + "products.json", newProduct);
+    return this.http.post(db.url + "products.json", newProduct)
+      .pipe(map(rs => {
+        return rs;
+      }))
   }
 
   getProducts():  Observable<Product[]> {
@@ -30,6 +29,50 @@ export class ProductdbService {
           peopleArr.push(rs[key]);
         }
         return peopleArr;
+      })
+    );
+  }
+
+  getProductById(id: number) {
+    return this.http.get<Product[]>(db.url + "products.json"
+      + `?orderBy="id"&startAt=${id}`)
+      .pipe(map(rs => {
+        const productArr: Product[] = [];
+        for (let key in rs) {
+          productArr.push(rs[key]);
+        }
+        return productArr;
+      })
+    );
+  }
+  
+  // deprecated
+  getKey(id: number) {
+    return this.http.get(db.url + "products.json"
+      + `?orderBy="id"&startAt=${id}`)
+      .pipe(map(rs => {
+        for (let key in rs) {
+          return key;
+        }
+        return "failed";
       }));
+  }
+
+  deleteProductById(id: number) {
+    return this.http.get(db.url + "products.json"
+      + `?orderBy="id"&startAt=${id}`).pipe(
+        concatMap(data => {
+          let key: String = "notAKey";
+          for (let i in data) {
+            key = i;
+          }
+          return this.http.delete(`${db.url}products/${key}.json`);
+        })
+      )
+  }
+
+  // This is wrong, I will update it at some point I think
+  updateProduct(product: Product) {
+    return this.http.put(db.url + "products.json", product);
   }
 }

@@ -1,0 +1,68 @@
+testName: string = "";
+  test: Product = {
+    id: -1,
+    title: "",
+		price: 0.00,
+		description: "",
+		category: Category.blank,
+		image: "",
+    rating: {
+      rate: 0.0,
+      count: 0
+    }
+  };
+
+  placeholder: Product = {
+    id: -1,
+    title: "",
+		price: 0.00,
+		description: "",
+		category: Category.blank,
+		image: "",
+    rating: {
+      rate: 0.0,
+      count: 0
+    }
+  };
+
+  testArr: Product[] = new Array();
+
+  onClick(): void {
+    console.log("Add button clicked");
+
+    let test: Product = {
+      id: 1,
+      title: "Mens Casual Premium Slim Fit T-Shirts",
+		  price: 22.30,
+		  description: "Slim-fitting style, contrast raglan long sleeve, three-button henley placket, light weight & soft fabric for breathable and comfortable wearing. And Solid stitched shirts with round neck made for durability and a great fit for casual fashion wear and diehard baseball fans. The Henley style round neckline includes a three-button placket.",
+		  category: Category.mens_clothing,
+		  image: "https://fakestoreapi.com/img/71YXzeOuslL._AC_UY879_.jpg",
+      rating: {
+        rate: 4.1,
+        count: 259
+      }
+    }
+
+    this.productdb.addProduct(test).subscribe((data) => {
+      
+    })
+  }
+
+  getClick2(): void {
+    this.productdb.getProducts().subscribe((data) => {
+      for (let i = 0; i < data.length; i++) {
+        this.testArr.push(data[i]);
+      }
+      this.test = this.testArr[0];
+    })
+  }
+
+  getId(id: number) {
+    this.productdb.getProductById(id).subscribe((data) => {
+      this.test = data[0];
+    })
+  }
+
+  deleteId(id: number) {
+    this.productdb.deleteProductById(id).subscribe();
+  }
