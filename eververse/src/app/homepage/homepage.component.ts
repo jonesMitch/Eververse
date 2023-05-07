@@ -2,10 +2,12 @@ import { Component } from '@angular/core';
 
 import { ProductdbService } from '../productdb.service';
 import { AccountdbService } from '../accountdb.service';
+import { OrderdbService } from '../orderdb.service';
 
 import { Product } from '../product';
 import { Category } from '../Category';
 import { Account } from '../account';
+import { Order } from '../order';
 
 @Component({
   selector: 'app-homepage',
@@ -16,51 +18,38 @@ export class HomepageComponent {
   constructor (
     private productdb: ProductdbService,
     private accountdb: AccountdbService,
+    private orderdb: OrderdbService,
   ) {}
 
-  accounts: Account[] = new Array();
-  test: Account = {
-    email: "placeholder",
-    password: "placeholder", 
-    fName: "placeholder",
-    lName: "placeholder"
+  test: Order = {
+    account: "Placeholder", 
+    date: Date.now(),
+    items: ["Placeholder"]
   }
 
-  addAccount() {
-    let newAcc = {
-      email: "ebray@bray.tech",
-      password: "asdf1234",
-      fName: "Elsie",
-      lName: "Bray",
-    }
-    this.accountdb.addAccount(newAcc).subscribe();
+  addCart(): void {
+    this.orderdb.addCart("abray@bray.tech").subscribe();
   }
 
-  getAccounts() {
-    this.accountdb.getAccounts().subscribe(data => {
-      console.log(data[0]);
-    })
+  getCart(): void {
+    this.orderdb.getCartFromEmail("abray@bray.tech").subscribe(data => {
+      console.log(data.items);
+    });
   }
 
-  getAccount(email: string) {
-    this.accountdb.getAccountByEmail(email).subscribe(data => {
-      this.test = data[0];
-    })
+  addToCart(): void {
+    this.orderdb.addProductToCart("abray@bray.tech", 2).subscribe();
   }
 
-  updateAccount() {
-    let old: Account = {
-      email: "abray@bray.tech",
-      password: "asdf1234",
-      fName: "Elsie",
-      lName: "Bray",
-    }
-    let update: Account = {
-      email: "abray@bray.tech",
-      password: "asdf1234",
-      fName: "Clovis",
-      lName: "Bray",
-    }
-    this.accountdb.updateAccount("abray@bray.tech", update).subscribe();
+  deleteFromCart(): void {
+    this.orderdb.removeItemFromCart("abray@bray.tech", 1).subscribe();
+  }
+
+  deleteAllFromCart(): void {
+    this.orderdb.removeAllItemsFromCart("abray@bray.tech").subscribe();
+  }
+
+  moveCartToOrders(): void {
+    this.orderdb.moveCartToOrders("abray@bray.tech").subscribe();
   }
 }

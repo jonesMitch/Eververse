@@ -1,36 +1,42 @@
-<button type="button" (click)="addAccount()">
-    POST New Account
+<button type="button" (click)="addCart()">
+    POST New Order
 </button>
 
-<button type="button" (click)="getAccounts()">
-    GET Accounts
+<button type="button" (click)="getCart()">
+    GET Cart
 </button>
 
-<button type="button" (click)="getAccount('mitch.jones@ndsu.edu')">
-    GET account | email=mitch.jones@ndsu.edu
+<button type="button" (click)="addToCart()">
+    PUT item
 </button>
 
-<button type="button" (click)="getAccount('ebray@bray.tech')">
-    Get account | email=ebray@bray.tech
+<button type="button" (click)="deleteFromCart()">
+    DELETE item from cart | id=1
 </button>
 
-<button type="button" (click)="updateAccount()">
-    UPDATE account
+<button type="button" (click)="deleteAllFromCart()">
+    DELETE all from cart
 </button>
+
+<button type="button" (click)="moveCartToOrders()">
+    Move cart to orders
+</button>
+
+<!-- <button type="button" (click)="updateCart('ebray@bray.tech')">
+    UPDATE cart
+</button> -->
 
 <!-- <button type="button" (click)="deleteAccount('ebray@bray.tech')">
     DELETE account | email=ebray@bray.tech
 </button> -->
 
 <div *ngIf="test != undefined">
-    <p>Email: {{test.email}}</p>
-    <p>Password: {{test.password}}</p>
-    <p>fName: {{test.fName}}</p>
-    <p>lName: {{test.lName}}</p>
+    <p>Account: {{test.account}}</p>
+    <p>Date: {{test.date}}</p>
+    <p>Items: {{test.items}}</p>
 </div>
 <div *ngIf="test === undefined">
-    <p>Email:</p>
-    <p>Password:</p>
-    <p>fName:</p>
-    <p>lName:</p>
+    <p>Account:</p>
+    <p>Date:</p>
+    <p>Items:</p>
 </div>

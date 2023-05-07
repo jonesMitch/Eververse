@@ -1,6 +1,7 @@
-export interface order {
-    email: string,
-    ordered: boolean,
-    date: Date,
-    items: {}
+import { Product } from "./product";
+
+export interface Order {
+    account: string,
+    date: number,  // milliseconds passed since epoch
+    items: string[]
 }

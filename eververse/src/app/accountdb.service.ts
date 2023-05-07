@@ -41,33 +41,13 @@ export class AccountdbService {
         }))
     }
 
-    deleteAccount(email: string) {
-      return this.http.get(db.url + "accounts.json"
-        +`?orderBy="email"&startAt="${email}"`).pipe(
-          concatMap(data => {
-            let key: string = "notAKey";
-            for (let i in data) {
-              key = i;
-            }
-            return this.http.delete(`${db.url}accounts/${key}.json`);
-          })
-        )
-    }
-
-    private getAccountKey(email: string) {
-      return this.http.get(db.url + "accounts.json"
-        + `?orderBy="email"&equalTo="${email}"`)
-        .pipe(map(rs => {
-          let key = "notAKey";
-          for (let i in rs) {
-            key = i;
-          }
-          return key;
-        }));
+    deleteAccount2(email: string) {
+      return this.getAccountKey(email).pipe(
+        concatMap(data => this.http.delete(`${db.url}accounts/${data}.json`)));
     }
 
     
-    // There's probably a better way to do this, but this works so I don't care
+
     updateAccount(oldEmail: string, update: Account) {
       let key: string = "notAKey";
       return this.getAccountKey(oldEmail).pipe(
@@ -88,5 +68,17 @@ export class AccountdbService {
           )
         })
       )
+    }
+
+    getAccountKey(email: string) {
+      return this.http.get(db.url + "accounts.json"
+        + `?orderBy="email"&equalTo="${email}"`)
+        .pipe(map(rs => {
+          let key = "notAKey";
+          for (let i in rs) {
+            key = i;
+          }
+          return key;
+        }));
     }
 }

@@ -10,6 +10,9 @@ import { Observable, catchError, map, concatMap } from 'rxjs';
 })
 export class ProductdbService {
 
+  // At some point if I have time I should re-write this to use product.name as
+  // the "pk" instead of id, and get rid of id entirely
+
   constructor(
     private http: HttpClient,
   ) { }
@@ -46,8 +49,7 @@ export class ProductdbService {
     );
   }
   
-  // deprecated
-  getKey(id: number) {
+  getProductKey(id: number) {
     return this.http.get(db.url + "products.json"
       + `?orderBy="id"&startAt=${id}`)
       .pipe(map(rs => {
@@ -56,6 +58,10 @@ export class ProductdbService {
         }
         return "failed";
       }));
+  }
+
+  getProductByKey(key: string) {
+    return this.http.get(`${db.url}products/${key}.json`); 
   }
 
   deleteProductById(id: number) {
