@@ -1,0 +1,25 @@
+.headerFooter {
+    background-color: #673ab7;
+    width: 100%;
+    border-color: transparent;
+    color: white;
+}
+
+#header {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+#headerContent {
+    margin-left: 1.5rem;
+
+    display: flex;
+    align-items: center;
+}
+
+#categoryButton {
+    color: white;
+    font-size: 18px;
+    margin-left: 1.5rem;
+}

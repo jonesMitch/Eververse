@@ -1,0 +1,15 @@
+<div class="headerFooter" id="header">
+    <div id="headerContent">
+        <h1>Eververse</h1>
+        <button id="categoryButton" mat-button [matMenuTriggerFor]="categoryButton">Categories</button>
+        <mat-menu #categoryButton="matMenu">
+            <button mat-menu-item>Men's Clothing</button>
+        </mat-menu>
+        <form>
+            <mat-form-field appearance="fill">
+                <mat-label>Search</mat-label>
+                <input  matInput>
+            </mat-form-field>
+        </form>
+    </div>
+</div>
