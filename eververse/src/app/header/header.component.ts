@@ -8,5 +8,12 @@ import { Category } from '../Category';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent {
+  searchBorderColor: string = "transparent";
 
+  searchFocus(): void {
+    this.searchBorderColor = "#f5cf3d";
+  }
+  searchBlur(): void {
+    this.searchBorderColor = "transparent";
+  }
 }

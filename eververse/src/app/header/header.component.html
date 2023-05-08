@@ -1,15 +1,22 @@
 <div class="headerFooter" id="header">
     <div id="headerContent">
         <h1>Eververse</h1>
-        <button id="categoryButton" mat-button [matMenuTriggerFor]="categoryButton">Categories</button>
-        <mat-menu #categoryButton="matMenu">
+        <button id="headerButton" mat-button [matMenuTriggerFor]="categoryButton">Categories</button>
+        <mat-menu #categoryButton="matMenu" xPosition="before">
             <button mat-menu-item>Men's Clothing</button>
         </mat-menu>
-        <form>
-            <mat-form-field appearance="fill">
-                <mat-label>Search</mat-label>
-                <input  matInput>
-            </mat-form-field>
-        </form>
+
+        <div id="searchDiv" [ngStyle]="{'border-color': searchBorderColor}">
+            <input id="searchInput" type="text" placeholder="Search Eververse" (focus)="searchFocus()" (blur)="searchBlur()">
+            <button id="searchButton" mat-icon-button color="primary" [ngStyle]="{transform: 'scale(1.15)'}">
+                <mat-icon>search</mat-icon>
+            </button>
+        </div>
+
+        <div id="accountDiv">
+            <button id="cartButton" mat-icon-button [ngStyle]="{transform: 'scale(1.5)'}">
+                <mat-icon>shopping_cart</mat-icon>
+            </button>
+        </div>
     </div>
 </div>
