@@ -3,36 +3,54 @@
         <p id="accountInfoHeader">
             Account Information
         </p>
-        <div id="fNameBox" class="accountInfoBox left">
-            <p id="fNameLabel" class="label">First name:</p>
-            <p id="fNameValue" class="valueLabel" *ngIf="!editFName">{{account.fName | capitalize}}</p>
-            <mat-form-field *ngIf="editFName" appearance="outline" class="editEntry" [ngStyle]="{transform: 'scale(0.75)'}">
-                <input matInput #fNameBox placeholder="{{this.account.fName | capitalize}}">
-            </mat-form-field>
-            <button mat-icon-button class="editSubmitButton" (click)="editFName = !editFName">
-                <mat-icon>{{editFName?"save":"edit"}}</mat-icon>
-            </button>
+        <div id="accountInfoDivElements">
+            <div id="fNameBox" class="accountInfoBox">
+                <p id="fNameLabel" class="label">First name:</p>
+                <p id="fNameValue" class="valueLabel" *ngIf="!editFName">{{account.fName | capitalize}}</p>
+                <mat-form-field *ngIf="editFName" appearance="outline" class="editEntry" [ngStyle]="{transform: 'scale(0.75)'}">
+                    <input matInput placeholder="{{this.account.fName | capitalize}}" [(ngModel)]="entries[0]">
+                </mat-form-field>
+                <button mat-icon-button class="editSubmitButton" (click)="editFName?save(0):nothing(); editFName = !editFName;">
+                    <mat-icon>{{editFName?"save":"edit"}}</mat-icon>
+                </button>
+            </div>
+            <div id="emailBox" class="accountInfoBox">
+                <p id="emailLabel" class="label">Email:</p>
+                <p id="emailValue" class="valueLabel" *ngIf="!editEmail">{{account.email}}</p>
+                <mat-form-field *ngIf="editEmail" appearance="outline" class="editEntry" [ngStyle]="{transform: 'scale(0.75)'}">
+                    <input matInput #emailBox placeholder="{{this.account.email}}" [formControl]="emailControl" [(ngModel)]="entries[2]">
+                    <mat-error *ngIf="emailControl.invalid"></mat-error>
+                </mat-form-field>
+                <button mat-icon-button class="editSubmitButton" (click)="editEmail = !editEmail">
+                    <mat-icon>{{editEmail?"save":"edit"}}</mat-icon>
+                </button>
+            </div>
+            <div id="lNameBox" class="accountInfoBox">
+                <p id="lNameLabel" class="label">Last name:</p>
+                <p id="lNameValue" class="valueLabel" *ngIf="!editLName">{{account.lName | capitalize}}</p>
+                <mat-form-field *ngIf="editLName" appearance="outline" class="editEntry" [ngStyle]="{transform: 'scale(0.75)'}">
+                    <input matInput #lNameBox placeholder="{{this.account.lName | capitalize}}" [(ngModel)]="entries[1]">
+                </mat-form-field>
+                <button mat-icon-button class="editSubmitButton" (click)="editLName = !editLName">
+                    <mat-icon>{{editLName?"save":"edit"}}</mat-icon>
+                </button>
+            </div>
+            <div id="passwordBox" class="accountInfoBox">
+                <p id="passwordLabel" class="label">Password:</p>
+                <p id="passwordValue" class="valueLabel" *ngIf="!editPassword">********</p>
+                <mat-form-field *ngIf="editPassword" appearance="outline" class="editEntry" [ngStyle]="{transform: 'scale(0.75)'}">
+                    <input matInput #passwordBox placeholder="********" [type]="hidePassword?'password':'text'" [formControl]="passwordControl" [(ngModel)]="entries[3]">
+                    <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword">
+                        <mat-icon>{{hidePassword?"visibility_off":"visibility"}}</mat-icon>
+                    </button>
+                    <mat-error *ngIf="passwordControl.invalid"></mat-error>
+                </mat-form-field>
+                <button mat-icon-button class="editSubmitButton" (click)="editPassword = !editPassword">
+                    <mat-icon>{{editPassword?"save":"edit"}}</mat-icon>
+                </button>
+            </div>
         </div>
-        <div id="lNameBox" class="accountInfoBox left">
-            <p id="lNameLabel" class="label">Last name:</p>
-            <p id="lNameValue" class="valueLabel" *ngIf="!editLName">{{account.lName | capitalize}}</p>
-            <mat-form-field *ngIf="editLName" appearance="outline" class="editEntry" [ngStyle]="{transform: 'scale(0.75)'}">
-                <input matInput #lNameBox placeholder="{{this.account.lName | capitalize}}">
-            </mat-form-field>
-            <button mat-icon-button class="editSubmitButton" (click)="editLName = !editLName">
-                <mat-icon>{{editLName?"save":"edit"}}</mat-icon>
-            </button>
-        </div>
-        <div id="emailBox" class="accountInfoBox right">
-            <p id="emailLabel" class="label">Email:</p>
-            <p id="emailValue" class="valueLabel" *ngIf="!editEmail">{{account.email}}</p>
-            <mat-form-field *ngIf="editEmail" appearance="outline" class="editEntry" [ngStyle]="{transform: 'scale(0.75)'}">
-                <input matInput #emailBox placeholder="{{this.account.email}}">
-            </mat-form-field>
-            <button mat-icon-button class="editSubmitButton" (click)="editEmail = !editEmail">
-                <mat-icon>{{editEmail?"save":"edit"}}</mat-icon>
-            </button>
-        </div>
+        
     </div>
     <div id="dividerDiv">
         <mat-divider></mat-divider><mat-divider></mat-divider>

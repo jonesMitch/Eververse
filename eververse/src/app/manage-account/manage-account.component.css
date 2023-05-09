@@ -6,7 +6,7 @@
     justify-content: center;
     flex-direction: column;
 
-    /* background-color: lightblue; */
+    background-color: lightblue;
 }
 
 .manageSubDiv {
@@ -16,7 +16,17 @@
 }
 
 #accountInfoDiv {
+
     background-color: lightgreen;
+}
+#accountInfoDivElements {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+
+    padding-left: 100px;
+
+    background-color: lightgoldenrodyellow;
 }
 #accountInfoHeader {
     font-size: 26px;
@@ -44,7 +54,6 @@
     flex-grow: 2;
 }
 .editEntry {
-    margin-left: -10px;
     margin-bottom: -15px;
     margin-top: 1px;
 

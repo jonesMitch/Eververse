@@ -25,6 +25,7 @@ export class CreateaccountComponent implements OnInit {
   ngOnInit(): void {
     this.accountdb.getAccounts().subscribe(data => {
       for (let i = 0; i < data.length; i++) {
+        // I know this is a terrible idea
         this.emails.push(data[i].email);
       }
     });
@@ -75,6 +76,10 @@ export class CreateaccountComponent implements OnInit {
   }
 }
 
+/* I know this is a bad idea, I should just be querying the database for the specific email
+ * to test instead of loading all emails from the database and parsing through them, 
+ * but I'm running out of time so this is how I'm doing it
+ */
 export function emailValidator(emails: string[]) {
   return (control: AbstractControl): ValidationErrors | null => {
     let emailCheck: boolean = false;
