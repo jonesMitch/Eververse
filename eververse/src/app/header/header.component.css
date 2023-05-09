@@ -3,6 +3,7 @@
     width: 100%;
     border-color: transparent;
     color: white;
+    height: 80px;
 }
 
 #header {
@@ -57,9 +58,23 @@ input {
 }
 
 #accountDiv {
-    float: right;
+    flex-grow: 1;
+}
+
+#innerAccountDiv {
+    display: flex;
+    align-items: center;
+    justify-content: right;
 }
 
 #cartButton {
-    float: right;
+    /* float: right; */
+    margin-right: 25px;
+}
+
+#signinButton {
+    color: white;
+    font-size: 18px;
+
+    margin-right: 20px;
 }

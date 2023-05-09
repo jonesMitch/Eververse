@@ -1,0 +1,36 @@
+<div id="createAccountDiv">
+    <h1>
+        Create Account
+    </h1>
+    <mat-form-field appearance="outline" class="entryField">
+        <mat-label>Email Address</mat-label>
+        <input matInput [formControl]="emailControl">
+        <mat-error *ngIf="emailControl.invalid">{{getEmailError()}}</mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="entryField">
+        <mat-label>First Name</mat-label>
+        <input matInput [formControl]="fNameControl">
+        <mat-error *ngIf="fNameControl.invalid">{{getFNameError()}}</mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="entryField">
+        <mat-label>Last Name</mat-label>
+        <input matInput [formControl]="lNameControl">
+        <mat-error *ngIf="lNameControl.invalid">{{getLNameError()}}</mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="entryField">
+        <mat-label>Password</mat-label>
+        <input matInput type="password" [formControl]="passwordControl" [(ngModel)]="password"> 
+        <mat-error *ngIf="passwordControl.invalid">{{getPasswordError()}}</mat-error>
+    </mat-form-field>
+    <ul id="passwordHints">
+        <li>Must be at least 8 characters long</li>
+        <li>Must have at least 1 uppercase and 1 lowercase letter</li>
+        <li>Must contain at least 1 number</li>
+    </ul>
+    <button mat-flat-button color="primary" id="submitButton">
+        Submit
+    </button>
+    <button mat-button id="orSignInButton">
+        or Sign-in
+    </button>
+</div>

@@ -1,0 +1,32 @@
+#createAccountDiv {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    width: 100%;
+    height: 1000px;
+
+}
+
+.entryField {
+    width: 400px;
+    margin-top: 10px;
+}
+
+#submitButton {
+    width: 250px;
+    height: 50px;
+}
+
+#orSignInButton {
+    margin-top: 25px;
+}
+
+#passwordHints {
+    margin-top: -0px;
+    margin-left: -50px;
+
+    font-size: 14px;
+    color: #666666;
+}

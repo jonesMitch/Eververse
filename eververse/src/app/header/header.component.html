@@ -2,7 +2,7 @@
     <div id="headerContent">
         <h1>Eververse</h1>
         <button id="headerButton" mat-button [matMenuTriggerFor]="categoryButton">Categories</button>
-        <mat-menu #categoryButton="matMenu" xPosition="before">
+        <mat-menu #categoryButton="matMenu" xPosition="after">
             <button mat-menu-item>Men's Clothing</button>
         </mat-menu>
 
@@ -14,9 +14,22 @@
         </div>
 
         <div id="accountDiv">
-            <button id="cartButton" mat-icon-button [ngStyle]="{transform: 'scale(1.5)'}">
-                <mat-icon>shopping_cart</mat-icon>
-            </button>
+                <div id="innerAccountDiv">
+                <button id="signinButton" mat-button [matMenuTriggerFor]="accountMenu">
+                    <p>Account</p>
+                </button>
+                <mat-menu #accountMenu="matMenu" xPosition="before">
+                    <button mat-menu-item>
+                        Create Account
+                    </button>
+                    <button mat-menu-item>
+                        Sign In
+                    </button>
+                </mat-menu>
+                <button id="cartButton" mat-icon-button [ngStyle]="{transform: 'scale(1.5)'}">
+                    <mat-icon>shopping_cart</mat-icon>
+                </button>
+            </div>
         </div>
     </div>
 </div>
