@@ -1,0 +1,28 @@
+<div id="signInDiv">
+    <p style="font-size: 26px;">
+        Sign In to Eververse
+    </p>
+    <p id="invalidAccount" *ngIf="invalidAccount">
+        Incorrect email or password
+    </p>
+    <mat-form-field appearance="outline" class="entryField">
+        <mat-label>Email Address</mat-label>
+        <input matInput [formControl]="emailControl" #emailBox>
+        <mat-error *ngIf="emailControl.invalid">{{getEmailError()}}</mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="entryField">
+        <mat-label>Password</mat-label>
+        <input matInput [formControl]="passwordControl" #passwordBox [type]="hidePassword?'password':'text'">
+        <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword">
+            <mat-icon>{{hidePassword?"visibility_off":"visibility"}}</mat-icon>
+        </button>
+        <mat-error *ngIf="passwordControl.invalid">{{getPasswordError()}}</mat-error>
+    </mat-form-field>
+    <button mat-flat-button color="primary" id="submitButton" [disabled]="emailControl.invalid || passwordControl.invalid"
+            (click)="createAccount(emailBox.value, passwordBox.value)">
+        Sign In
+    </button>
+    <button mat-button id="orCreateAccountButton" routerLink="/create-account">
+        or Create Account
+    </button>
+</div>

@@ -1,25 +1,28 @@
 <div id="createAccountDiv">
-    <h1>
-        Create Account
-    </h1>
+    <p style="font-size: 26px;">
+        Create Eververse Account
+    </p>
     <mat-form-field appearance="outline" class="entryField">
         <mat-label>Email Address</mat-label>
-        <input matInput [formControl]="emailControl">
+        <input matInput [formControl]="emailControl" #emailBox>
         <mat-error *ngIf="emailControl.invalid">{{getEmailError()}}</mat-error>
     </mat-form-field>
     <mat-form-field appearance="outline" class="entryField">
         <mat-label>First Name</mat-label>
-        <input matInput [formControl]="fNameControl">
+        <input matInput [formControl]="fNameControl" #fNameBox>
         <mat-error *ngIf="fNameControl.invalid">{{getFNameError()}}</mat-error>
     </mat-form-field>
     <mat-form-field appearance="outline" class="entryField">
         <mat-label>Last Name</mat-label>
-        <input matInput [formControl]="lNameControl">
+        <input matInput [formControl]="lNameControl" #lNameBox>
         <mat-error *ngIf="lNameControl.invalid">{{getLNameError()}}</mat-error>
     </mat-form-field>
     <mat-form-field appearance="outline" class="entryField">
         <mat-label>Password</mat-label>
-        <input matInput type="password" [formControl]="passwordControl" [(ngModel)]="password"> 
+        <input matInput type="password" [formControl]="passwordControl" [type]="hidePassword?'password':'text'" #passwordBox> 
+        <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword">
+            <mat-icon>{{hidePassword?"visibility_off":"visibility"}}</mat-icon>
+        </button>
         <mat-error *ngIf="passwordControl.invalid">{{getPasswordError()}}</mat-error>
     </mat-form-field>
     <ul id="passwordHints">
@@ -27,10 +30,11 @@
         <li>Must have at least 1 uppercase and 1 lowercase letter</li>
         <li>Must contain at least 1 number</li>
     </ul>
-    <button mat-flat-button color="primary" id="submitButton">
-        Submit
+    <button mat-flat-button color="primary" id="submitButton" [disabled]="emailControl.invalid || fNameControl.invalid || lNameControl.invalid || passwordControl.invalid"
+            (click)="submit(emailBox.value, fNameBox.value, lNameBox.value, passwordBox.value)" routerLink="/homepage">
+        Create Account
     </button>
-    <button mat-button id="orSignInButton">
-        or Sign-in
+    <button mat-button id="orSignInButton" routerLink="/sign-in">
+        or Sign In
     </button>
 </div>

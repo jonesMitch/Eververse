@@ -11,14 +11,13 @@ import { Account } from '../account';
 })
 export class CreateaccountComponent implements OnInit {
   emails: string[] = new Array(); // all emails
-
-  password: string = "";
+  hidePassword: boolean = true;
   
   emailControl = new FormControl('', { validators: [Validators.email, Validators.required, emailValidator(this.emails)], updateOn: "change" });
   fNameControl = new FormControl('', { validators: [Validators.required] });
   lNameControl = new FormControl('', { validators: [Validators.required] });
   passwordControl = new FormControl('', { validators: [Validators.required, Validators.pattern(/(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/)], updateOn: "change" });
-  
+
   constructor(
     private accountdb: AccountdbService,
   ) { }
@@ -61,6 +60,18 @@ export class CreateaccountComponent implements OnInit {
       return "";
     }
     return "Test";
+  }
+
+  submit(email: string, fName: string, lName: string, password: string) {
+    let newAccount: Account = {
+      email: email,
+      fName: fName.toLowerCase(),
+      lName: lName.toLowerCase(),
+      password: password,
+    }
+
+    this.accountdb.setSignedIn(newAccount);
+    this.accountdb.addAccount(newAccount).subscribe();
   }
 }
 

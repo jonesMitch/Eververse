@@ -1,11 +1,11 @@
-#createAccountDiv {
+#signInDiv {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 
     width: 100%;
-    height: 1000px;
+    height: 750px;
 }
 
 .entryField {
@@ -18,14 +18,12 @@
     height: 50px;
 }
 
-#orSignInButton {
+#orCreateAccountButton {
     margin-top: 25px;
 }
 
-#passwordHints {
-    margin-top: -0px;
-    margin-left: -50px;
-
-    font-size: 14px;
-    color: #666666;
+#invalidAccount {
+    color: #f44336;
+    font-size: 22;
+    margin-top: 0px;
 }

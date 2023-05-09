@@ -1,84 +1,106 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { Injectable } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
 
-import { Account } from './account';
-import { db } from './settings';
+import { Account } from "./account";
+import { db } from "./settings";
 import { Observable, map, concatMap } from "rxjs";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class AccountdbService {
+  // if null, not signed in
+  signedIn: Account | null = null;
 
-  constructor(
-    private http: HttpClient,
-  ) { }
+  constructor(private http: HttpClient) {}
 
-    addAccount(newAccount: Account) {
-      return this.http.post(db.url + "accounts.json", newAccount);
-    }
+  // assumes the account is in the database, i.e. doesn't verify that it is
+  getSignedIn(): Account | null {
+    return this.signedIn;
+  }
 
-    getAccounts(): Observable<Account[]> {
-      return this.http.get<Account[]>(db.url + "accounts.json")
-        .pipe(map(rs => {
-          let accountsArr: Account[] = new Array();
-          for (let key in rs) {
-            accountsArr.push(rs[key]);
-          }
-          return accountsArr;
-        }));
-    }
+  // assumes the account is in the database, i.e. doesn't verify that it is
+  setSignedIn(acc: Account | null): void {
+    this.signedIn = acc;
+  }
 
-    getAccountByEmail(email: string) {
-      return this.http.get<Account[]>(db.url + "accounts.json"
-        + `?orderBy="email"&equalTo="${email}"`)
-        .pipe(map(rs => {
-          let accountsArr: Account[] = new Array();
-          for (let key in rs) {
-            accountsArr.push(rs[key]);
-          }
-          return accountsArr;
-        }))
-    }
+  addAccount(newAccount: Account) {
+    return this.http.post(db.url + "accounts.json", newAccount);
+  }
 
-    deleteAccount2(email: string) {
-      return this.getAccountKey(email).pipe(
-        concatMap(data => this.http.delete(`${db.url}accounts/${data}.json`)));
-    }
+  formatName(name: string): string {
+    let firstLetter = name[0];
+    return firstLetter.toUpperCase() + name.slice(1, name.length);
+  }
 
-    
+  getAccounts(): Observable<Account[]> {
+    return this.http.get<Account[]>(db.url + "accounts.json").pipe(
+      map((rs) => {
+        let accountsArr: Account[] = new Array();
+        for (let key in rs) {
+          accountsArr.push(rs[key]);
+        }
+        return accountsArr;
+      })
+    );
+  }
 
-    updateAccount(oldEmail: string, update: Account) {
-      let key: string = "notAKey";
-      return this.getAccountKey(oldEmail).pipe(
-        concatMap(data => {
-          key = data;
-          return this.getAccountByEmail(oldEmail).pipe(
-            concatMap(data2 => {
-              let temp = data2[0];
-              const body = {
-                email : update.email === "" ? temp.email : update.email,
-                password : update.password === "" ? temp.password : update.password,
-                fName : update.fName === "" ? temp.fName : update.fName,
-                lName : update.lName === "" ? temp.lName : update.lName,
-              }
-              console.log(key);
-              return this.http.put(`${db.url}accounts/${key}.json`, body);
-            })
-          )
-        })
+  getAccountByEmail(email: string) {
+    return this.http
+      .get<Account[]>(
+        db.url + "accounts.json" + `?orderBy="email"&equalTo="${email}"`
       )
-    }
+      .pipe(
+        map((rs) => {
+          let accountsArr: Account[] = new Array();
+          for (let key in rs) {
+            accountsArr.push(rs[key]);
+          }
+          return accountsArr;
+        })
+      );
+  }
 
-    getAccountKey(email: string) {
-      return this.http.get(db.url + "accounts.json"
-        + `?orderBy="email"&equalTo="${email}"`)
-        .pipe(map(rs => {
+  deleteAccount2(email: string) {
+    return this.getAccountKey(email).pipe(
+      concatMap((data) => this.http.delete(`${db.url}accounts/${data}.json`))
+    );
+  }
+
+  updateAccount(oldEmail: string, update: Account) {
+    let key: string = "notAKey";
+    return this.getAccountKey(oldEmail).pipe(
+      concatMap((data) => {
+        key = data;
+        return this.getAccountByEmail(oldEmail).pipe(
+          concatMap((data2) => {
+            let temp = data2[0];
+            const body = {
+              email: update.email === "" ? temp.email : update.email,
+              password:
+                update.password === "" ? temp.password : update.password,
+              fName: update.fName === "" ? temp.fName : update.fName,
+              lName: update.lName === "" ? temp.lName : update.lName,
+            };
+            console.log(key);
+            return this.http.put(`${db.url}accounts/${key}.json`, body);
+          })
+        );
+      })
+    );
+  }
+
+  getAccountKey(email: string) {
+    return this.http
+      .get(db.url + "accounts.json" + `?orderBy="email"&equalTo="${email}"`)
+      .pipe(
+        map((rs) => {
           let key = "notAKey";
           for (let i in rs) {
             key = i;
           }
           return key;
-        }));
-    }
+        })
+      );
+  }
 }

@@ -17,13 +17,17 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { HeaderComponent } from './header/header.component';
 import { CreateaccountComponent } from './createaccount/createaccount.component';
+import { SignInComponent } from './sign-in/sign-in.component';
+import { ManageAccountComponent } from './manage-account/manage-account.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomepageComponent,
     HeaderComponent,
-    CreateaccountComponent
+    CreateaccountComponent,
+    SignInComponent,
+    ManageAccountComponent
   ],
   imports: [
     BrowserModule,
