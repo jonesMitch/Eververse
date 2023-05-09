@@ -1,7 +1,45 @@
-<div id="accountInfoDiv">
-    
-</div>
-
-<div id="orderHistoryDiv">
-    
+<div id="manageAccountDiv">
+    <div id="accountInfoDiv" class="manageSubDiv">
+        <p id="accountInfoHeader">
+            Account Information
+        </p>
+        <div id="fNameBox" class="accountInfoBox left">
+            <p id="fNameLabel" class="label">First name:</p>
+            <p id="fNameValue" class="valueLabel" *ngIf="!editFName">{{account.fName | capitalize}}</p>
+            <mat-form-field *ngIf="editFName" appearance="outline" class="editEntry" [ngStyle]="{transform: 'scale(0.75)'}">
+                <input matInput #fNameBox placeholder="{{this.account.fName | capitalize}}">
+            </mat-form-field>
+            <button mat-icon-button class="editSubmitButton" (click)="editFName = !editFName">
+                <mat-icon>{{editFName?"save":"edit"}}</mat-icon>
+            </button>
+        </div>
+        <div id="lNameBox" class="accountInfoBox left">
+            <p id="lNameLabel" class="label">Last name:</p>
+            <p id="lNameValue" class="valueLabel" *ngIf="!editLName">{{account.lName | capitalize}}</p>
+            <mat-form-field *ngIf="editLName" appearance="outline" class="editEntry" [ngStyle]="{transform: 'scale(0.75)'}">
+                <input matInput #lNameBox placeholder="{{this.account.lName | capitalize}}">
+            </mat-form-field>
+            <button mat-icon-button class="editSubmitButton" (click)="editLName = !editLName">
+                <mat-icon>{{editLName?"save":"edit"}}</mat-icon>
+            </button>
+        </div>
+        <div id="emailBox" class="accountInfoBox right">
+            <p id="emailLabel" class="label">Email:</p>
+            <p id="emailValue" class="valueLabel" *ngIf="!editEmail">{{account.email}}</p>
+            <mat-form-field *ngIf="editEmail" appearance="outline" class="editEntry" [ngStyle]="{transform: 'scale(0.75)'}">
+                <input matInput #emailBox placeholder="{{this.account.email}}">
+            </mat-form-field>
+            <button mat-icon-button class="editSubmitButton" (click)="editEmail = !editEmail">
+                <mat-icon>{{editEmail?"save":"edit"}}</mat-icon>
+            </button>
+        </div>
+    </div>
+    <div id="dividerDiv">
+        <mat-divider></mat-divider><mat-divider></mat-divider>
+    </div>
+    <div id="orderHistoryDiv" class="manageSubDiv">
+        <p id="orderHistoryHeader">
+            Order History
+        </p>
+    </div>
 </div>

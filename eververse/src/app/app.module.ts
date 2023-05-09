@@ -14,11 +14,13 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatDividerModule } from '@angular/material/divider';
 
 import { HeaderComponent } from './header/header.component';
 import { CreateaccountComponent } from './createaccount/createaccount.component';
 import { SignInComponent } from './sign-in/sign-in.component';
 import { ManageAccountComponent } from './manage-account/manage-account.component';
+import { CapitalizePipe } from './capitalize.pipe';
 
 @NgModule({
   declarations: [
@@ -27,7 +29,8 @@ import { ManageAccountComponent } from './manage-account/manage-account.componen
     HeaderComponent,
     CreateaccountComponent,
     SignInComponent,
-    ManageAccountComponent
+    ManageAccountComponent,
+    CapitalizePipe
   ],
   imports: [
     BrowserModule,
@@ -42,6 +45,7 @@ import { ManageAccountComponent } from './manage-account/manage-account.componen
     MatIconModule,
     FormsModule,
     ReactiveFormsModule,
+    MatDividerModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

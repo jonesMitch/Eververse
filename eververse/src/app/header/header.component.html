@@ -27,7 +27,7 @@
                     <button *ngIf="!isSignedIn" mat-menu-item routerLink="/sign-in">
                         Sign In
                     </button>
-                    <button *ngIf="isSignedIn" mat-menu-item>
+                    <button *ngIf="isSignedIn" mat-menu-item routerLink="/manage-account">
                         Manage Account
                     </button>
                     <button *ngIf="isSignedIn" mat-menu-item (click)="signOut()" routerLink="/homepage">
