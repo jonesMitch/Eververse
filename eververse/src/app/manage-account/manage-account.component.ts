@@ -18,23 +18,25 @@ import { Product } from '../product';
 export class ManageAccountComponent implements OnInit {
   emails: string[] = new Array();
 
-  hidePassword: boolean = false;
+  hidePassword: boolean = true;
 
   account: Account = {
-    email: "mitch.jones@ndsu.edu",
-    fName: "error",
-    lName: "error",
-    password: "error"
+    email: "--------------------",
+    fName: "-------",
+    lName: "-------",
+    password: "--------"
   }
 
   // 0 = fName, 1 = lName, 2 = email, 3 = password
-  entries: string[] = new Array(4);
+  entries: string[] = ["", "", "", ""];
 
   editFName: boolean = false;
   editLName: boolean = false;
   editEmail: boolean = false;
   editPassword: boolean = false;
 
+  fNameControl = new FormControl('', { validators: [Validators.pattern(/^[a-zA-Z]+$/)], updateOn: "change"});
+  lNameControl = new FormControl('', { validators: [Validators.pattern(/^[a-zA-Z]+$/)], updateOn: "change"});
   emailControl = new FormControl('', { validators: [Validators.email, emailValidator(this.emails)], updateOn: "change"});
   passwordControl = new FormControl('', { validators: [Validators.pattern(/(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/)], updateOn: "change"});
 
@@ -51,35 +53,46 @@ export class ManageAccountComponent implements OnInit {
         this.emails.push(data[i].email);
       }
     })
-
-    // let acc: Account = {
-    //   email: "mitch.jones@ndsu.edu",
-    //   fName: "mitch",
-    //   lName: "jones",
-    //   password: "Testing123"
-    // }
-    // this.accountdb.setSignedIn(acc);
-    // console.log("Set account");
     this.loadAccountInfo();
   }
 
   loadAccountInfo(): void {
-    let temp: Account | null = this.accountdb.getSignedIn();
-    if (temp === null) {
-      console.log("Fuck");
-      this.account =  {
-        fName: "error",
-        lName: "error",
-        email: "error",
-        password: "error"
+    this.accountdb.getSignedIn2().subscribe(account => {
+      if (account !== null) {
+        this.account = account;
       }
-    } else {
-      console.log("Here");
-      this.account =  temp;
+    });
+  }
+
+  save2(id: number) {
+    let updateAccount: Account = {
+      fName: "",
+      lName: "",
+      email: "",
+      password: ""
     }
+
+    if (id === 0) {
+      this.editFName = !this.editFName;
+      updateAccount.fName = this.entries[id].toLowerCase();
+    } else if (id === 1) {
+      this.editLName = !this.editLName;
+      updateAccount.lName = this.entries[id].toLowerCase();
+    } else if (id === 2) {
+      this.editEmail = !this.editEmail;
+      updateAccount.email = this.entries[id];
+    } else {
+      this.editPassword = !this.editPassword;
+      updateAccount.password = this.entries[id];
+    }
+    this.entries[id] = "";
+    this.accountdb.updateAccount(this.account.email, updateAccount).subscribe(_ => {
+      this.loadAccountInfo();
+    });
   }
 
   // id = 0: fName, id = 1: lname, id = 2: email, id = 3: password
+  // deprecated
   save(id: number) {
     let updateAccount: Account = {
       fName: id===0?this.entries[0].toLowerCase():"",
@@ -90,7 +103,6 @@ export class ManageAccountComponent implements OnInit {
     this.accountdb.updateAccount(this.account.email, updateAccount).subscribe();
     this.accountdb.setSignedIn(updateAccount);
     this.loadAccountInfo();
-    console.log(this.account.email);
   }
   nothing() { }
 }

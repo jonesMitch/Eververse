@@ -39,7 +39,7 @@ export class SignInComponent {
       acc = data[0]===undefined?null:data[0];
       if (acc !== null) {
         if (password === acc.password) {
-          this.accountdb.setSignedIn(acc);
+          this.accountdb.setSignedIn2(acc).subscribe();
           this.router.navigate(['/homepage']);
         }
         this.invalidAccount = true;

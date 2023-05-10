@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
 import { ProductdbService } from '../productdb.service';
 import { AccountdbService } from '../accountdb.service';
@@ -14,12 +14,33 @@ import { Order } from '../order';
   templateUrl: './homepage.component.html',
   styleUrls: ['./homepage.component.css']
 })
-export class HomepageComponent {
+export class HomepageComponent implements OnInit {
+  featuredProducts: Product[] = new Array();
+  account: Account | null = null;
+
   constructor (
     private productdb: ProductdbService,
     private accountdb: AccountdbService,
     private orderdb: OrderdbService,
   ) {}
 
-  
+  ngOnInit(): void {
+    this.productdb.getProducts().subscribe(data => {
+      for (let i = 0; i < data.length; i++) {
+        this.featuredProducts.push(data[i]);
+      }
+    });
+    this.getSignedIn();
+  }
+
+  getSignedIn(): void {
+    this.accountdb.getSignedIn2().subscribe(account => {
+      if (account === undefined) {
+        this.account = null;
+      }
+      else {
+        this.account = account;
+      }
+    });
+  }
 }

@@ -1,0 +1,34 @@
+<div id="left">
+    <mat-divider></mat-divider>
+    <div id="productDiv">
+        <div id="imageDiv">
+            <img class="image" src="{{product.image}}">
+        </div>
+        <div id="otherDiv">
+            <div id="titleDiv">
+                <p>{{product.title}}</p>
+            </div>
+            <div id="quantityDiv">
+                <p>Quantity:</p>
+                <mat-form-field appearance="outline" id="quantityField" [ngStyle]="{transform: 'scale(0.5)'}">
+                    <input matInput placeholder="{{quantity}}" [formControl]="quantityControl" #quantityField >
+                    <mat-error *ngIf="quantityControl.invalid"></mat-error>
+                </mat-form-field>
+                <button mat-icon-button id="submitQuantityButton" (click)="updateQuantity(quantityField.value)"
+                        [disabled]="quantityControl.invalid">
+                    <mat-icon>check</mat-icon>
+                </button>
+            </div>
+            <div id="priceDiv">
+                <p>Price: {{product.price*quantity | price}}</p>
+                <p *ngIf="quantity>1" id="eachLabel">({{product.price | price}} each)</p>
+            </div>
+            <div id="deleteDiv">
+                <button mat-button id="deleteButton" color="warn">
+                    Delete
+                </button>
+            </div>
+        </div>
+    </div>
+    <mat-divider></mat-divider>
+</div>

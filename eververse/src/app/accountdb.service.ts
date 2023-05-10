@@ -2,8 +2,9 @@ import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 
 import { Account } from "./account";
+import { Signedin } from "./signedin";
 import { db } from "./settings";
-import { Observable, map, concatMap } from "rxjs";
+import { Observable, map, concatMap, of } from "rxjs";
 
 @Injectable({
   providedIn: "root",
@@ -16,12 +17,66 @@ export class AccountdbService {
 
   // assumes the account is in the database, i.e. doesn't verify that it is
   getSignedIn(): Account | null {
+    // console.log(this.signedIn);
     return this.signedIn;
+  }
+
+  getSignedIn2() {
+    return this.http.get<Signedin[]>(db.url + "signedin.json").pipe(
+      concatMap(data => {
+        let tempArr: Signedin[] = new Array();
+        for (let key in data) {
+          tempArr.push(data[key]);
+        }
+        return this.http.get<Account>(`${db.url}accounts/${tempArr[0].key}.json`).pipe(
+          map(account => {
+            return account;
+          })
+        )
+      })
+    )
   }
 
   // assumes the account is in the database, i.e. doesn't verify that it is
   setSignedIn(acc: Account | null): void {
     this.signedIn = acc;
+  }
+
+  setSignedIn3(email: string | null) {
+    let temp: Signedin = { key : "null" }
+
+    if (email === null) {
+      this.http.delete(db.url + "signedin.json").pipe(
+        concatMap(_ => this.http.post(db.url + "signedin.json", temp))
+      )
+    } else {
+      this.getAccountKey(email).pipe(
+        concatMap(accountKey => {
+          return this.http.delete(db.url + "signedin.json").pipe(
+            concatMap(_ => {
+              temp.key = accountKey;
+              return this.http.post(db.url + "signedin.json", temp)
+            })
+          )
+        })
+      )
+    }
+  }
+
+  setSignedIn2(acc: Account | null) {
+    let temp: Signedin = { key : "" }
+
+    if (acc === null) {
+      return this.http.delete(db.url + "signedin.json").pipe(
+        concatMap(nothing => this.http.post(db.url + "signedin.json", temp))
+      )
+    } else {
+      return this.getAccountKey(acc.email).pipe(
+        concatMap(data => {
+          temp.key = data;
+          return this.http.post(db.url + "signedin.json", temp);
+        }));
+    }
   }
 
   addAccount(newAccount: Account) {
@@ -77,12 +132,10 @@ export class AccountdbService {
             let temp = data2[0];
             const body = {
               email: update.email === "" ? temp.email : update.email,
-              password:
-                update.password === "" ? temp.password : update.password,
+              password: update.password === "" ? temp.password : update.password,
               fName: update.fName === "" ? temp.fName : update.fName,
               lName: update.lName === "" ? temp.lName : update.lName,
             };
-            console.log(key);
             return this.http.put(`${db.url}accounts/${key}.json`, body);
           })
         );

@@ -1,0 +1,78 @@
+{
+  "accounts": {
+    "-NUjwf5XwxUwjlGrMhU0": {
+      "email": "abray@bray.tech",
+      "fName": "Clovis",
+      "lName": "Bray",
+      "password": "Testing1234"
+    },
+    "-NUmPbha0VPSZUPFe_pL": {
+      "email": "ebray@bray.tech",
+      "fName": "Elsie",
+      "lName": "Bray",
+      "password": "asdf1234"
+    },
+    "-NUylLoxMVbUnMUVQ1Oc": {
+      "email": "mitch.jones@ndsu.edu",
+      "fName": "test",
+      "lName": "jones",
+      "password": "Testing123"
+    },
+    "-NUyx6P53lWIrpajKeko": {
+      "email": "test@test.test",
+      "fName": "bob",
+      "lName": "testing",
+      "password": "Testing123"
+    }
+  },
+  "carts": {
+    "-NUnnWJiSvf5EhLLtXx1": {
+      "account": "-NUjwf5XwxUwjlGrMhU0",
+      "date": 1683423497493,
+      "items": [
+        "temp"
+      ]
+    }
+  },
+  "orders": {
+    "-NUnquhyVnrC1g2u9a--": {
+      "account": "-NUjwf5XwxUwjlGrMhU0",
+      "date": 1683422581013,
+      "items": [
+        "temp",
+        "-NUmhPfqgW5spu0paDbP"
+      ]
+    }
+  },
+  "products": {
+    "-NUjWDffM3xZslb50T0-": {
+      "category": "men's clothing",
+      "description": "Slim-fitting style, contrast raglan long sleeve, three-button henley placket, light weight & soft fabric for breathable and comfortable wearing. And Solid stitched shirts with round neck made for durability and a great fit for casual fashion wear and diehard baseball fans. The Henley style round neckline includes a three-button placket.",
+      "id": 1,
+      "image": "https://fakestoreapi.com/img/71YXzeOuslL._AC_UY879_.jpg",
+      "price": 22.3,
+      "rating": {
+        "count": 259,
+        "rate": 4.1
+      },
+      "title": "Mens Casual Premium Slim Fit T-Shirts"
+    },
+    "-NUmhPfqgW5spu0paDbP": {
+      "category": "men's clothing",
+      "description": "Your perfect pack for everyday use and walks in the forest. Stash your laptop (up to 15 inches) in the padded sleeve, your everyday",
+      "id": 2,
+      "image": "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg",
+      "price": 109.95,
+      "rating": {
+        "count": 120,
+        "rate": 3.9
+      },
+      "title": "Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops"
+    }
+  },
+  "signedin": {
+    "-NV1u8ip0OIX00gE7QJQ": {
+      "key": "-NUylLoxMVbUnMUVQ1Oc"
+    }
+  }
+}

@@ -1,0 +1,93 @@
+#left {
+    margin: 100px;
+    margin-left: 200px;
+
+    width: 60%;
+    min-width: 500px;
+}
+
+#productDiv {
+    display: flex;
+    flex-direction: row;
+
+    /* background-color: lightgreen; */
+}
+
+#imageDiv {
+    height: 200px;
+    margin: 10px 10px 10px 10px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    /* background-color: lightgrey; */
+}
+.image {
+    height: 100%;
+    width: auto;
+}
+
+#otherDiv {
+    display: flex;
+    flex-direction: column;
+
+    font-size: 17px;
+
+    /* background-color: lightcoral; */
+}
+
+#titleDiv {
+    display: flex;
+    align-items: center;
+
+    height: 66px;
+
+    margin-left: 8px;
+}
+
+#quantityDiv {
+    display: flex;
+    flex-direction: row;
+
+    margin-left: 8px;
+
+    height: 58px;
+
+    /* background-color: lightgoldenrodyellow; */
+}
+#quantityField {
+    width: 100px;
+    font-size: 34px;
+
+    margin-left: -10px;
+    margin-top: -6px;
+}
+#submitQuantityButton {
+    margin-left: -25px;
+    margin-top: 4px;
+}
+
+#priceDiv {
+    display: flex;
+    flex-direction: row;
+
+    margin-left: 8px;
+
+    height: 58px;
+
+    align-items: center;
+}
+#eachLabel {
+    font-size: 14px;
+    margin-left: 15px;
+}
+
+#deleteDiv {
+    display: flex;
+    align-items: center;
+
+    height: 58px;
+
+    /* background-color: lightgoldenrodyellow; */
+}

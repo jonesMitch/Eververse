@@ -15,12 +15,18 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatDividerModule } from '@angular/material/divider';
+import { MatBadgeModule } from '@angular/material/badge';
 
 import { HeaderComponent } from './header/header.component';
 import { CreateaccountComponent } from './createaccount/createaccount.component';
 import { SignInComponent } from './sign-in/sign-in.component';
 import { ManageAccountComponent } from './manage-account/manage-account.component';
 import { CapitalizePipe } from './capitalize.pipe';
+import { ProductCardComponent } from './product-card/product-card.component';
+import { PricePipe } from './price.pipe';
+import { TitlePipe } from './title.pipe';
+import { CartComponent } from './cart/cart.component';
+import { ProductHorizComponent } from './product-horiz/product-horiz.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +36,12 @@ import { CapitalizePipe } from './capitalize.pipe';
     CreateaccountComponent,
     SignInComponent,
     ManageAccountComponent,
-    CapitalizePipe
+    CapitalizePipe,
+    ProductCardComponent,
+    PricePipe,
+    TitlePipe,
+    CartComponent,
+    ProductHorizComponent
   ],
   imports: [
     BrowserModule,
@@ -46,6 +57,7 @@ import { CapitalizePipe } from './capitalize.pipe';
     FormsModule,
     ReactiveFormsModule,
     MatDividerModule,
+    MatBadgeModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

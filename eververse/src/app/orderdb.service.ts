@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 
 import { Order } from './order';
 import { db } from './settings';
-import { Observable, map, concatMap } from "rxjs";
+import { Observable, map, concatMap, Subject } from "rxjs";
 import { AccountdbService } from './accountdb.service';
 import { ProductdbService } from './productdb.service';
 
@@ -11,6 +11,12 @@ import { ProductdbService } from './productdb.service';
   providedIn: 'root'
 })
 export class OrderdbService {
+  private _cartQuantity = new Subject<number>();
+  cartQuantity$ = this._cartQuantity.asObservable();
+
+  incrementQuantity() {
+    this._cartQuantity.next(1);
+  }
 
   constructor(
     private http: HttpClient,
@@ -73,14 +79,16 @@ export class OrderdbService {
   }
 
   // get product hash, get cart hash, get cart, put cart
-  addProductToCart(email: string, productId: number) {
+  addProductToCart(email: string, productId: number, quantity: number) {
     return this.productdb.getProductKey(productId).pipe(
       concatMap(productKey => {
         return this.getCartKey(email).pipe(
           concatMap(cartKey => {
             return this.getCartFromEmail(email).pipe(
               concatMap(cart => {
-                cart.items.push(productKey);
+                for (let i = 0; i < quantity; i++) {
+                  cart.items.push(productKey);
+                }
                 let updateCart: Order = {
                   account: cart.account,
                   date: cart.date,
@@ -97,15 +105,16 @@ export class OrderdbService {
 
   // remove item from cart
   // same as adding to the cart, just filtering the items array before PUT
-  removeItemFromCart(email: string, productId: number) {
+  removeItemFromCart(email: string, productId: number, quantity: number) {
     return this.productdb.getProductKey(productId).pipe(
       concatMap(productKey => this.getCartKey(email).pipe(
         concatMap(cartKey => this.getCartFromEmail(email).pipe(
           concatMap(cart => {
             let newItems: string[] = new Array();
             for (let i = 0; i < cart.items.length; i++) {
-              if (cart.items[i] !== productKey) {
+              if (cart.items[i] !== productKey || quantity != 0) {
                 newItems.push(cart.items[i]);
+                quantity--;
               }
             }
             let updateCart: Order = {
@@ -169,7 +178,4 @@ export class OrderdbService {
       )
     )
   }
-
-
-  
 }

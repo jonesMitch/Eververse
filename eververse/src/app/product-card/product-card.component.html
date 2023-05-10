@@ -1,0 +1,25 @@
+<div class="productDiv">
+    <div id="imageDiv">
+        <img class="image" src="{{product.image}}">
+    </div>
+    <p id="title">
+        {{product.title | title}}
+    </p>
+    <div id="ratings">
+        <div id="starsDiv">
+            <mat-icon class="stars" *ngFor="let test of [].constructor(getStars()[0])">star</mat-icon>
+            <mat-icon class="stars" *ngFor="let test of [].constructor(getStars()[1])">star_half</mat-icon>
+            <mat-icon class="stars" *ngFor="let test of [].constructor(getStars()[2])">star_outline</mat-icon>
+        </div>
+        <div id="countDiv">
+            {{product.rating.count}}
+        </div>
+    </div>
+    <div id="priceDiv">
+        <p>{{product.price | price}}</p>
+    </div>
+    <button id="addToCartButton" mat-flat-button color="primary" [disabled]="account===null" (click)="addToCart()">
+        <p *ngIf="account!==null">Add To cart</p>
+        <p *ngIf="account===null">Sign In To Add To cart</p>
+    </button>
+</div>

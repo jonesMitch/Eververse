@@ -60,8 +60,8 @@ export class ProductdbService {
       }));
   }
 
-  getProductByKey(key: string) {
-    return this.http.get(`${db.url}products/${key}.json`); 
+  getProductByKey(key: string): Observable<Product> {
+    return this.http.get<Product>(`${db.url}products/${key}.json`); 
   }
 
   deleteProductById(id: number) {

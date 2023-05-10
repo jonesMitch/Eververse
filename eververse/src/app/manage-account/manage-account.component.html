@@ -6,11 +6,12 @@
         <div id="accountInfoDivElements">
             <div id="fNameBox" class="accountInfoBox">
                 <p id="fNameLabel" class="label">First name:</p>
-                <p id="fNameValue" class="valueLabel" *ngIf="!editFName">{{account.fName | capitalize}}</p>
+                <p id="fNameValue" class="valueLabel" *ngIf="!editFName">{{account.fName | titlecase}}</p>
                 <mat-form-field *ngIf="editFName" appearance="outline" class="editEntry" [ngStyle]="{transform: 'scale(0.75)'}">
-                    <input matInput placeholder="{{this.account.fName | capitalize}}" [(ngModel)]="entries[0]">
+                    <input matInput placeholder="{{this.account.fName | capitalize}}" [(ngModel)]="entries[0]" [formControl]="fNameControl">
+                    <mat-error *ngIf="fNameControl.invalid"></mat-error>
                 </mat-form-field>
-                <button mat-icon-button class="editSubmitButton" (click)="editFName?save(0):nothing(); editFName = !editFName;">
+                <button mat-icon-button class="editSubmitButton" (click)="save2(0)" [disabled]="fNameControl.invalid">
                     <mat-icon>{{editFName?"save":"edit"}}</mat-icon>
                 </button>
             </div>
@@ -21,7 +22,7 @@
                     <input matInput #emailBox placeholder="{{this.account.email}}" [formControl]="emailControl" [(ngModel)]="entries[2]">
                     <mat-error *ngIf="emailControl.invalid"></mat-error>
                 </mat-form-field>
-                <button mat-icon-button class="editSubmitButton" (click)="editEmail = !editEmail">
+                <button mat-icon-button class="editSubmitButton" (click)="save2(2)" [disabled]="emailControl.invalid">
                     <mat-icon>{{editEmail?"save":"edit"}}</mat-icon>
                 </button>
             </div>
@@ -29,9 +30,9 @@
                 <p id="lNameLabel" class="label">Last name:</p>
                 <p id="lNameValue" class="valueLabel" *ngIf="!editLName">{{account.lName | capitalize}}</p>
                 <mat-form-field *ngIf="editLName" appearance="outline" class="editEntry" [ngStyle]="{transform: 'scale(0.75)'}">
-                    <input matInput #lNameBox placeholder="{{this.account.lName | capitalize}}" [(ngModel)]="entries[1]">
+                    <input matInput #lNameBox placeholder="{{this.account.lName | capitalize}}" [(ngModel)]="entries[1]" [formControl]="lNameControl">
                 </mat-form-field>
-                <button mat-icon-button class="editSubmitButton" (click)="editLName = !editLName">
+                <button mat-icon-button class="editSubmitButton" (click)="save2(1)" [disabled]="lNameControl.invalid">
                     <mat-icon>{{editLName?"save":"edit"}}</mat-icon>
                 </button>
             </div>
@@ -45,7 +46,7 @@
                     </button>
                     <mat-error *ngIf="passwordControl.invalid"></mat-error>
                 </mat-form-field>
-                <button mat-icon-button class="editSubmitButton" (click)="editPassword = !editPassword">
+                <button mat-icon-button class="editSubmitButton" (click)="save2(3)" [disabled]="passwordControl.invalid">
                     <mat-icon>{{editPassword?"save":"edit"}}</mat-icon>
                 </button>
             </div>
@@ -56,7 +57,7 @@
         <mat-divider></mat-divider><mat-divider></mat-divider>
     </div>
     <div id="orderHistoryDiv" class="manageSubDiv">
-        <p id="orderHistoryHeader">
+        <p id="accountInfoHeader">
             Order History
         </p>
     </div>

@@ -18,25 +18,30 @@
         <div id="accountDiv">
                 <div id="innerAccountDiv">
                 <button id="signinButton" mat-button [matMenuTriggerFor]="accountMenu">
-                    <p>{{getName()}}</p>
+                    <p>{{account===null?"Account":account.fName | capitalize}}</p>
                 </button>
                 <mat-menu #accountMenu="matMenu" xPosition="before">
-                    <button *ngIf="!isSignedIn" mat-menu-item routerLink="/create-account">
+                    <button *ngIf="account===null" mat-menu-item routerLink="/create-account">
                         Create Account
                     </button>
-                    <button *ngIf="!isSignedIn" mat-menu-item routerLink="/sign-in">
+                    <button *ngIf="account===null" mat-menu-item routerLink="/sign-in">
                         Sign In
                     </button>
-                    <button *ngIf="isSignedIn" mat-menu-item routerLink="/manage-account">
+                    <button *ngIf="account!==null" mat-menu-item routerLink="/manage-account">
                         Manage Account
                     </button>
-                    <button *ngIf="isSignedIn" mat-menu-item (click)="signOut()" routerLink="/homepage">
+                    <button *ngIf="account!==null" mat-menu-item (click)="signOut()" routerLink="/homepage">
                         Sign Out
                     </button>
                 </mat-menu>
-                <button id="cartButton" mat-icon-button [ngStyle]="{transform: 'scale(1.5)'}">
-                    <mat-icon>shopping_cart</mat-icon>
+                <button id="cartButton" mat-icon-button [ngStyle]="{transform: 'scale(1.5)'}" routerLink="cart">
+                    <mat-icon matBadge="{{cartLength}}" matBadgeColor="accent" matBadgeSize="small">shopping_cart</mat-icon>
                 </button>
+                <!-- <mat-menu #cartMenu="matMenu">
+                    <p mat-menu-item>Total = {{69.69 | price}}</p>
+                    <button mat-menu-item [disabled]="true" style="color: black !important;">Total = {{69.69 | price}}</button>
+                    <button mat-menu-item>Go To Cart</button>
+                </mat-menu> -->
             </div>
         </div>
     </div>
