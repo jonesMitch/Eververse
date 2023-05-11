@@ -1,10 +1,12 @@
 <div class="productDiv">
-    <div id="imageDiv">
-        <img class="image" src="{{product.image}}">
-    </div>
-    <p id="title">
-        {{product.title | title}}
-    </p>
+    <a routerLink="/product-detail/{{product.id}}">
+        <div id="imageDiv">
+            <img class="image" src="{{product.image}}">
+        </div>
+        <p id="title">
+            {{product.title | title}}
+        </p>
+    </a>
     <div id="ratings">
         <div id="starsDiv">
             <mat-icon class="stars" *ngFor="let test of [].constructor(getStars()[0])">star</mat-icon>

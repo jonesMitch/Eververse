@@ -1,14 +1,13 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { FormControl, Validators } from '@angular/forms';
 
 import { Product } from '../product';
 import { Category } from '../Category';
-import { Account } from '../account';
-import { Order } from '../order';
+
+import { cartQuantity } from '../cart/cart.component';
 
 import { ProductdbService } from '../productdb.service';
-import { AccountdbService } from '../accountdb.service';
 import { OrderdbService } from '../orderdb.service';
-import { FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-product-horiz',
@@ -16,7 +15,12 @@ import { FormControl, Validators } from '@angular/forms';
   styleUrls: ['./product-horiz.component.css']
 })
 export class ProductHorizComponent implements OnInit {
-  @Input() quantity: number = 2;
+  @Input() isOrderHistory: boolean = false;
+  closed: boolean = false;
+
+  @Input() quantity: number = 1;
+  currentQuantity: number = 2;
+
   @Input() productKey: string = "";
   product: Product = {
     title: "--------",
@@ -31,21 +35,47 @@ export class ProductHorizComponent implements OnInit {
     }
   }
 
-  quantityControl = new FormControl('', { validators: [Validators.pattern(/^[1-9]\d*$/)], updateOn: "change"});
+  @Input() cartInput: cartQuantity = { key: "", quantity: 1, email: "" };
+  email: string = "";
+
+  quantityControl = new FormControl('', { validators: [Validators.pattern(/^[1-9]\d*$/), Validators.required], updateOn: "change"});
 
   constructor(
     private productdb: ProductdbService,
-    private accountdb: AccountdbService,
     private orderdb: OrderdbService,
   ) { }
 
   ngOnInit(): void {
-    this.productdb.getProductByKey(this.productKey).subscribe(product => {
+    this.productdb.getProductByKey(this.cartInput.key).subscribe(product => {
       this.product = product;
-    });
+      this.quantity = this.cartInput.quantity;
+      this.currentQuantity = this.quantity;
+      this.email = this.cartInput.email;
+    })
   }
 
   updateQuantity(quantity: string) {
     this.quantity = parseInt(quantity);
+    let diff = this.currentQuantity - this.quantity;
+    this.currentQuantity = this.quantity;
+    if (diff > 0) {
+      this.orderdb.removeItemFromCart(this.email, this.product.id, diff).subscribe(_ => {
+        this.orderdb.changeQuantity(-1 * diff);
+      });
+      
+    } else if (diff < 0) {
+      this.orderdb.addProductToCart(this.email, this.product.id, -1*diff).subscribe(_ => {
+        this.orderdb.changeQuantity(-1 * diff);
+      });
+      
+    }
+    // do nothing if diff is 0
+  }
+
+  deleteItem() {
+    this.orderdb.removeItemFromCart(this.email, this.product.id, this.currentQuantity).subscribe(_ => {
+      this.orderdb.changeQuantity(-1*this.currentQuantity);
+    });
+    this.closed = true; // if it's a bad idea, but it works, then it's not a bad idea
   }
 }

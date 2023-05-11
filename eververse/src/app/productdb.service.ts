@@ -3,15 +3,23 @@ import { HttpClient } from '@angular/common/http';
 
 import { Product } from './product';
 import { db } from './settings';
-import { Observable, catchError, map, concatMap } from 'rxjs';
+import { Observable, Subject, map, concatMap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductdbService {
+  private _products = new Subject<Product[] | null>();
+  products$ = this._products.asObservable();
+  displayProducts(products: Product[] | null) {
+    this._products.next(products);
+  }
 
-  // At some point if I have time I should re-write this to use product.name as
-  // the "pk" instead of id, and get rid of id entirely
+  private _searchString = new Subject<string>();
+  searchString$ = this._searchString.asObservable();
+  setSearchString(searchString: string) {
+    this._searchString.next(searchString);
+  }
 
   constructor(
     private http: HttpClient,
@@ -62,6 +70,37 @@ export class ProductdbService {
 
   getProductByKey(key: string): Observable<Product> {
     return this.http.get<Product>(`${db.url}products/${key}.json`); 
+  }
+
+  getProductsByTitle2(title: string): Observable<Product[]> {
+    return this.getProducts().pipe(
+      map(productArr => {
+        let initialArr = new Array();
+        let returnArr = new Array();
+        for (let key in productArr) {
+          initialArr.push(productArr[key]);
+        }
+        for (let product of initialArr) {
+          if (product.title.toLowerCase().search(title.toLowerCase()) !== -1) {
+            returnArr.push(product);
+          }
+        }
+        return returnArr;
+      })
+    )
+  }
+
+  getProductsByTitle(title: string): Observable<Product[]> {
+    return this.http.get<Product[]>(db.url + "products.json"
+      + `?orderBy="title"&startAt="${title}"`).pipe(
+        map(rs => {
+          let productArr: Product[] = new Array();
+          for (let key in rs) {
+            productArr.push(rs[key]);
+          }
+          return productArr;
+        })
+      )
   }
 
   deleteProductById(id: number) {

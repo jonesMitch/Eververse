@@ -27,6 +27,8 @@ import { PricePipe } from './price.pipe';
 import { TitlePipe } from './title.pipe';
 import { CartComponent } from './cart/cart.component';
 import { ProductHorizComponent } from './product-horiz/product-horiz.component';
+import { ProductDetailComponent } from './product-detail/product-detail.component';
+import { OrderHistoryCardComponent } from './order-history-card/order-history-card.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +43,9 @@ import { ProductHorizComponent } from './product-horiz/product-horiz.component';
     PricePipe,
     TitlePipe,
     CartComponent,
-    ProductHorizComponent
+    ProductHorizComponent,
+    ProductDetailComponent,
+    OrderHistoryCardComponent
   ],
   imports: [
     BrowserModule,

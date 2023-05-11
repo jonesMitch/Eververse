@@ -1,0 +1,58 @@
+#table {
+    width: 70%;
+
+    margin-left: 15%;
+    margin-top: 100px;
+
+    /* background-color: lightblue; */
+}
+
+#leftGrid {
+    width: 60%;
+
+    /* background-color: lightgray; */
+}
+
+#left {
+    /* margin-top: 100px; */
+    /* margin-left: 300px; */
+    /* margin-left: 15%; */
+
+    /* width: 40%; */
+    min-width: 500px;
+
+    /* background-color: lightgreen; */
+}
+
+#rightGrid {
+    display: flex;
+    align-items: top;
+    justify-content: center;
+    flex-direction: column;
+
+    padding-left: 50px;
+    padding-right: 50px;
+}
+
+#right {
+    /* height: 200px; */
+    width: 400px;
+    padding-left: 10px;
+
+    font-size: 18px;
+
+    border-left: solid grey;
+    border-width: 2px;
+    /* background-color: lightcoral; */
+}
+.money {
+    float: right;
+}
+#title {
+    font-size: 22px;
+}
+
+#orderButton {
+    margin: 25px 0 0 30px;
+    width: 50%;
+}

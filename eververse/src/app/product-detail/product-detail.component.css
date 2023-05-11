@@ -1,0 +1,66 @@
+#topDiv {
+    display: flex;
+    flex-direction: row;
+
+    /* margin-left: 300px; */
+    margin-left: 20%;
+    margin-top: 100px;
+
+    /* height: 500px; */
+
+    /* background-color: lightgreen; */
+}
+#image {
+    width: auto;
+    height: 500px;
+}
+
+#titleDiv {
+    display: flex;
+    flex-direction: column;
+
+    /* margin-left: 275px; */
+    margin-left: 15%;
+    padding-left: 25px;
+
+    height: inherit;
+    width: 650px;
+
+    font-size: 22px;
+
+    border-left: solid grey 2px;
+
+    /* background-color: lightcoral; */
+}
+
+#title {
+    font-size: 26px;
+}
+#price {
+    margin-top: 50px;
+    margin-bottom: 0px;
+}
+#starsDiv {
+    display: flex;
+    flex-direction: row;
+    font-size: 18px;
+    margin-top: 20px;
+}
+#count {
+    margin-top: 3px;
+    margin-left: 10px;
+}
+
+#addToCartButton {
+    width: 200px;
+    height: 50px;
+    margin-top: 80px;
+}
+
+#description {
+    margin-top: 80px;
+    margin-bottom: 0px;
+}
+#descriptionText {
+    margin-top: 20px;
+}

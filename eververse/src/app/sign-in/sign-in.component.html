@@ -2,7 +2,7 @@
     <p style="font-size: 26px; font-weight: bold;">
         Sign In to Eververse
     </p>
-    <p id="invalidAccount" *ngIf="invalidAccount">
+    <p id="invalidAccount" *ngIf="invalidAccount && !lockInvalidAccount">
         Incorrect email or password
     </p>
     <mat-form-field appearance="outline" class="entryField">

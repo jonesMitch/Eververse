@@ -12,6 +12,7 @@ import { AccountdbService } from '../accountdb.service';
 })
 export class SignInComponent {
   invalidAccount: boolean = false;
+  lockInvalidAccount: boolean = false;
   hidePassword: boolean = true;
 
   emailControl = new FormControl('', { validators: [Validators.email, Validators.required], updateOn: "change" });
@@ -39,8 +40,11 @@ export class SignInComponent {
       acc = data[0]===undefined?null:data[0];
       if (acc !== null) {
         if (password === acc.password) {
-          this.accountdb.setSignedIn2(acc).subscribe();
-          this.router.navigate(['/homepage']);
+          this.lockInvalidAccount = true;
+          this.accountdb.setSignedIn3(acc.email).subscribe(_ => {
+            this.accountdb.signedInEvent();
+            this.router.navigate(['/homepage']);  
+          });
         }
         this.invalidAccount = true;
       }

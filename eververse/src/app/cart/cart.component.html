@@ -1,2 +1,22 @@
-
-<app-product-horiz *ngFor="let product of actualCartItems" [productKey]="product"></app-product-horiz>
+<table id="table">
+    <tr>
+        <td id="leftGrid">
+            <div id="left">
+                <app-product-horiz *ngFor="let product of cartQuantity" [cartInput]="product"></app-product-horiz>
+            </div>
+        </td>
+        <td id="rightGrid">
+            <div id="right">
+                <p id="title">Order Summary</p>
+                <mat-divider></mat-divider>
+                <p>&emsp;Subtotal: {{subTotal | price}}</p>
+                <p>&emsp;Estimated tax: {{tax | price}}</p>
+                <mat-divider></mat-divider>
+                <p>&emsp;Total: {{total | price}}</p>
+            </div>
+            <button id="orderButton" mat-flat-button color="primary" (click)="placeOrder()">
+                Place Order
+            </button>
+        </td>
+    </tr>
+</table>

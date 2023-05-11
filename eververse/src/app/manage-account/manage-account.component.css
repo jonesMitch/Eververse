@@ -28,7 +28,7 @@
 
     /* background-color: lightgoldenrodyellow; */
 }
-#accountInfoHeader {
+.accountInfoHeader {
     font-size: 26px;
     font-weight: bold;
 }
@@ -75,4 +75,15 @@
 
 
     /* background-color: lightsalmon; */
+}
+
+#subHeader {
+    margin-top: 0px;
+    padding-top: 0px;
+    
+    margin-bottom: 50px;
+}
+
+#orderHeader {
+    margin-bottom: 10spx;
 }

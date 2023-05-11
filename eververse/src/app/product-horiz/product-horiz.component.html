@@ -1,4 +1,4 @@
-<div id="left">
+<div *ngIf="!closed">
     <mat-divider></mat-divider>
     <div id="productDiv">
         <div id="imageDiv">
@@ -6,25 +6,30 @@
         </div>
         <div id="otherDiv">
             <div id="titleDiv">
-                <p>{{product.title}}</p>
+                <a routerLink="/product-detail/{{product.id}}">
+                    <p>{{product.title}}</p>
+                </a>
             </div>
-            <div id="quantityDiv">
+            <div *ngIf="!isOrderHistory" id="quantityDiv">
                 <p>Quantity:</p>
                 <mat-form-field appearance="outline" id="quantityField" [ngStyle]="{transform: 'scale(0.5)'}">
                     <input matInput placeholder="{{quantity}}" [formControl]="quantityControl" #quantityField >
                     <mat-error *ngIf="quantityControl.invalid"></mat-error>
                 </mat-form-field>
-                <button mat-icon-button id="submitQuantityButton" (click)="updateQuantity(quantityField.value)"
+                <button mat-icon-button id="submitQuantityButton" (click)="updateQuantity(quantityField.value); quantityField.value = ''"
                         [disabled]="quantityControl.invalid">
                     <mat-icon>check</mat-icon>
                 </button>
+            </div>
+            <div *ngIf="isOrderHistory" id="quantityBox2">
+                <p>Quantity: {{quantity}}</p>
             </div>
             <div id="priceDiv">
                 <p>Price: {{product.price*quantity | price}}</p>
                 <p *ngIf="quantity>1" id="eachLabel">({{product.price | price}} each)</p>
             </div>
             <div id="deleteDiv">
-                <button mat-button id="deleteButton" color="warn">
+                <button *ngIf="!isOrderHistory" mat-button id="deleteButton" color="warn" (click)="deleteItem()">
                     Delete
                 </button>
             </div>

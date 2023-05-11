@@ -14,8 +14,8 @@ export class OrderdbService {
   private _cartQuantity = new Subject<number>();
   cartQuantity$ = this._cartQuantity.asObservable();
 
-  incrementQuantity() {
-    this._cartQuantity.next(1);
+  changeQuantity(value: number) {
+    this._cartQuantity.next(value);
   }
 
   constructor(
@@ -111,10 +111,12 @@ export class OrderdbService {
         concatMap(cartKey => this.getCartFromEmail(email).pipe(
           concatMap(cart => {
             let newItems: string[] = new Array();
+            let itemQuantity = quantity;
             for (let i = 0; i < cart.items.length; i++) {
-              if (cart.items[i] !== productKey || quantity != 0) {
+              if (cart.items[i] !== productKey || (cart.items[i]===productKey && itemQuantity <= 0)) {
                 newItems.push(cart.items[i]);
-                quantity--;
+              } if (itemQuantity > 0 && cart.items[i] === productKey) {
+                itemQuantity--;
               }
             }
             let updateCart: Order = {
@@ -170,11 +172,19 @@ export class OrderdbService {
   // get orders (order history)
   // get email hash, get orders with that email, sort by date?
   // untested
-  getOrderHistory(email: string) {
+  getOrderHistory(email: string): Observable<Order[]> {
     return this.accountdb.getAccountKey(email).pipe(
       concatMap(accountKey =>
-        this.http.get(db.url + "orders.json"
-           + `?orderBy="account"&equalTo="${accountKey}"`)
+        this.http.get<Order[]>(db.url + "orders.json"
+           + `?orderBy="account"&equalTo="${accountKey}"`).pipe(
+            map(orders => {
+              let orderArr: Order[] = new Array();
+              for (let key in orders) {
+                orderArr.push(orders[key]);
+              }
+              return orderArr;
+            })
+           )
       )
     )
   }

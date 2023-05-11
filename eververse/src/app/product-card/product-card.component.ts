@@ -52,7 +52,7 @@ export class ProductCardComponent {
   addToCart(): void {
     if (this.account !== null) {
       this.orderdb.addProductToCart(this.account.email, this.product.id, 1).subscribe();
-      this.orderdb.incrementQuantity();
+      this.orderdb.changeQuantity(1);
     }
   }
 }

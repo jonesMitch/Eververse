@@ -9,13 +9,17 @@ import { Account } from '../account';
 import { Order } from '../order';
 import { Product } from '../product';
 
-
 @Component({
   selector: 'app-manage-account',
   templateUrl: './manage-account.component.html',
   styleUrls: ['./manage-account.component.css']
 })
 export class ManageAccountComponent implements OnInit {
+  orderHistory: Order[] = new Array();
+  orderNumber: number = 1;
+
+  getOrderNumber(): number { return this.orderNumber++ }
+
   emails: string[] = new Array();
 
   hidePassword: boolean = true;
@@ -60,6 +64,7 @@ export class ManageAccountComponent implements OnInit {
     this.accountdb.getSignedIn2().subscribe(account => {
       if (account !== null) {
         this.account = account;
+        this.getOrderHistory();
       }
     });
   }
@@ -105,7 +110,14 @@ export class ManageAccountComponent implements OnInit {
     this.loadAccountInfo();
   }
   nothing() { }
+
+  getOrderHistory(): void {
+    this.orderdb.getOrderHistory(this.account.email).subscribe(orders => {
+      this.orderHistory = orders;
+    })
+  }
 }
+
 
 /* I know this is a bad idea, I should just be querying the database for the specific email
  * to test instead of loading all emails from the database and parsing through them, 

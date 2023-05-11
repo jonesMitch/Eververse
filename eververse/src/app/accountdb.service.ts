@@ -4,14 +4,21 @@ import { HttpClient } from "@angular/common/http";
 import { Account } from "./account";
 import { Signedin } from "./signedin";
 import { db } from "./settings";
-import { Observable, map, concatMap, of } from "rxjs";
+import { Observable, map, concatMap, Subject } from "rxjs";
 
 @Injectable({
   providedIn: "root",
 })
 export class AccountdbService {
-  // if null, not signed in
+  // if null, not signed in // deprecated
   signedIn: Account | null = null;
+
+  private _signedIn = new Subject<boolean>();
+  signedIn$ = this._signedIn.asObservable();
+
+  signedInEvent() {
+    this._signedIn.next(true);
+  }
 
   constructor(private http: HttpClient) {}
 
@@ -46,16 +53,16 @@ export class AccountdbService {
     let temp: Signedin = { key : "null" }
 
     if (email === null) {
-      this.http.delete(db.url + "signedin.json").pipe(
+      return this.http.delete(db.url + "signedin.json").pipe(
         concatMap(_ => this.http.post(db.url + "signedin.json", temp))
       )
     } else {
-      this.getAccountKey(email).pipe(
+      return this.getAccountKey(email).pipe(
         concatMap(accountKey => {
           return this.http.delete(db.url + "signedin.json").pipe(
             concatMap(_ => {
               temp.key = accountKey;
-              return this.http.post(db.url + "signedin.json", temp)
+              return this.http.post(db.url + "signedin.json", temp);
             })
           )
         })

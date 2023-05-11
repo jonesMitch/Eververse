@@ -1,6 +1,6 @@
 <div id="manageAccountDiv">
     <div id="accountInfoDiv" class="manageSubDiv">
-        <p id="accountInfoHeader">
+        <p class="accountInfoHeader">
             Account Information
         </p>
         <div id="accountInfoDivElements">
@@ -57,8 +57,12 @@
         <mat-divider></mat-divider><mat-divider></mat-divider>
     </div>
     <div id="orderHistoryDiv" class="manageSubDiv">
-        <p id="accountInfoHeader">
+        <p class="accountInfoHeader" id="orderHeader">
             Order History
         </p>
+        <p id="subHeader">
+            (starting form most recent)
+        </p>
+        <app-order-history-card *ngFor="let order of orderHistory" [order]="order"></app-order-history-card>
     </div>
 </div>

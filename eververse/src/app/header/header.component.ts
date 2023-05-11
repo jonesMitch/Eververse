@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { Category } from '../Category';
 import { Account } from '../account';
@@ -25,19 +26,27 @@ export class HeaderComponent implements OnInit {
     private accountdb: AccountdbService,
     private orderdb: OrderdbService,
     private productdb: ProductdbService,
+    private router: Router,
   ) { }
 
   ngOnInit(): void {
     this.getSignedIn();
-
+    this.accountdb.signedIn$.subscribe(_ => {
+      this.getSignedIn();
+    })
     this.orderdb.cartQuantity$.subscribe(data => {
-      this.cartLength++;
+      if (data === 0.1) {
+        this.cartLength = 0;
+      } else {
+        this.cartLength += data;
+      }
     })
   }
 
   getSignedIn(): void {
     this.accountdb.getSignedIn2().subscribe(account => {
-      if (account === undefined) {
+      if (account === undefined || account === null) {
+        console.log("Undefined or null");
         this.account = null;
       }
       else {
@@ -63,13 +72,27 @@ export class HeaderComponent implements OnInit {
     }
   }
 
+  search(searchString: string): void {
+    this.productdb.getProductsByTitle2(searchString).subscribe(productArr => {
+      console.log("Searched");
+      if (searchString === "") {
+        this.productdb.displayProducts(null);
+      } else {
+        this.productdb.displayProducts(productArr);
+        this.productdb.setSearchString(searchString);
+      }
+      this.router.navigate(["/homepage"]);
+    })
+  }
+
   incrementCartLength(): void { 
     console.log("Increment");
     this.cartLength++; 
   }
 
   signOut(): void {
-    this.accountdb.setSignedIn(null);
+    this.accountdb.setSignedIn3(null).subscribe();
+    this.account = null;
   }
 
   searchFocus(): void {

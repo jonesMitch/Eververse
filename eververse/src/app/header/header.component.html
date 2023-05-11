@@ -9,8 +9,8 @@
         </mat-menu>
 
         <div id="searchDiv" [ngStyle]="{'border-color': searchBorderColor}">
-            <input id="searchInput" type="text" placeholder="Search Eververse" (focus)="searchFocus()" (blur)="searchBlur()">
-            <button id="searchButton" mat-icon-button color="primary" [ngStyle]="{transform: 'scale(1.15)'}">
+            <input id="searchInput" type="text" placeholder="Search Eververse" (focus)="searchFocus()" (blur)="searchBlur()" #searchBar>
+            <button id="searchButton" mat-icon-button color="primary" [ngStyle]="{transform: 'scale(1.15)'}" (click)="search(searchBar.value)">
                 <mat-icon>search</mat-icon>
             </button>
         </div>
@@ -35,7 +35,7 @@
                     </button>
                 </mat-menu>
                 <button id="cartButton" mat-icon-button [ngStyle]="{transform: 'scale(1.5)'}" routerLink="cart">
-                    <mat-icon matBadge="{{cartLength}}" matBadgeColor="accent" matBadgeSize="small">shopping_cart</mat-icon>
+                    <mat-icon matBadge="{{account===null?'0':cartLength}}" matBadgeColor="accent" matBadgeSize="small">shopping_cart</mat-icon>
                 </button>
                 <!-- <mat-menu #cartMenu="matMenu">
                     <p mat-menu-item>Total = {{69.69 | price}}</p>

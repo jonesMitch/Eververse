@@ -15,8 +15,12 @@ import { Order } from '../order';
   styleUrls: ['./homepage.component.css']
 })
 export class HomepageComponent implements OnInit {
-  featuredProducts: Product[] = new Array();
+  products: Product[] = new Array();
   account: Account | null = null;
+
+  noProducts: boolean = false;
+  featured: boolean = true;
+  searchString: string = "";
 
   constructor (
     private productdb: ProductdbService,
@@ -25,9 +29,33 @@ export class HomepageComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.getFeaturedProducts();
+
+    this.productdb.products$.subscribe(productArr => {
+      if (productArr === null) {
+        this.noProducts = false;
+        this.featured = true;
+        this.getFeaturedProducts();
+      } else {
+        this.products = productArr;
+        if (this.products.length === 0) {
+          this.noProducts = true;
+          this.featured = false;
+        } else {
+          this.noProducts = false;
+          this.featured = false;
+          this.productdb.searchString$.subscribe(searchString => {
+            this.searchString = searchString;
+          })
+        }
+      }
+    });
+  }
+
+  getFeaturedProducts(): void {
     this.productdb.getProducts().subscribe(data => {
       for (let i = 0; i < data.length; i++) {
-        this.featuredProducts.push(data[i]);
+        this.products.push(data[i]);
       }
     });
     this.getSignedIn();
